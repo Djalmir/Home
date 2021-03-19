@@ -566,8 +566,8 @@
 				else{
 					if(!editingItem.url.startsWith('http'))
 						editingItem.url='http://'+editingItem.url
-						editingItem.imgSrc = `https://s2.googleusercontent.com/s2/favicons?domain_url=${editingItem.url}`
-						// editingItem.imgSrc = `chrome://favicon2/?size=48&scale_factor=1x&show_fallback_monogram=&page_url=${editingItem.url}`
+						// editingItem.imgSrc = `https://s2.googleusercontent.com/s2/favicons?domain_url=${editingItem.url}`
+						editingItem.imgSrc = `chrome://favicon2/?size=48&scale_factor=1x&show_fallback_monogram=&page_url=${editingItem.url}`
 					let list = lists.find(list=>list.id==editingItem.listId)
 					console.log(list)
 					if(list.items.find(item=>item.id==editingItem.id))
