@@ -1,5 +1,10 @@
 @charset "UTF-8";
 
+body{
+	background:linear-gradient(to bottom, #101010, #303030, #101010);
+	background-attachment: fixed;
+}
+
 ::-webkit-scrollbar {
 	background: transparent;
 	width: 8px;
@@ -106,11 +111,6 @@ section {
 	flex-direction: column;
 	align-items: center;
 	padding: 100px 0;
-	box-sizing: border-box;
-	background: linear-gradient(to bottom, #101010, #303030 30% 70%, #101010);
-	background-repeat: no-repeat;
-	background-size: 100%;
-	background-attachment: fixed;
 }
 
 #addListBt {

@@ -1,5 +1,21 @@
 var lists = []
 var listsContainer = document.getElementById('listsContainer')
+var backgroundImages = []
+
+function getBackgroundImages(res) {
+	console.log(res)
+	if(res.items){
+		res.items.map((photo) => {
+			backgroundImages.push(photo.link)
+		})
+		let section = document.getElementById('section')
+		section.style.background = `url(${ backgroundImages[Math.floor(Math.random() * backgroundImages.length)] })`
+		section.style.backgroundRepeat = 'no-repeat'
+		section.style.backgroundSize = "100% 100%"
+		section.style.backgroundPosition='center'
+		section.style.backgroundAttachment = 'fixed'
+	}
+}
 
 document.oncontextmenu = (e) => {
 	e.preventDefault()
