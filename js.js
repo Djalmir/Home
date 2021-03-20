@@ -1,20 +1,51 @@
 var lists = []
 var listsContainer = document.getElementById('listsContainer')
 var backgroundImages = []
+var searchList = ['Natureza', 'Carros', 'Cidade', 'Artes']
+var search = searchList[Math.floor(Math.random()*4)]
+
+if (!localStorage.getItem('myHomePage.backgroundImages')) {
+	console.log('Adicionou o script do google')
+	let script = document.createElement('script')
+	script.src = `https://www.googleapis.com/customsearch/v1?searchType=image&q=wide+wallpaper+${ search }&imgType=photo&imgDominantColor=black&imgColorType=trans&callback=getBackgroundImages&key=AIzaSyDYrgmw2FfsFIbowl_8bJYTl4umuQCtv84&cx=5fc4b6eacb628da8f`
+	document.getElementsByTagName('head')[0].appendChild(script)
+}
+else {
+	console.log('Pegando links do armazenamento local')
+	let photos = JSON.parse(localStorage.getItem('myHomePage.backgroundImages'))
+	photos.map((photoLink) => {
+		backgroundImages.push(photoLink)
+	})
+	setBackgroundImage()
+}
 
 function getBackgroundImages(res) {
-	console.log(res)
-	if(res.items){
+	console.log('Retorno do google: ', res)
+	if (res.items) {
 		res.items.map((photo) => {
 			backgroundImages.push(photo.link)
 		})
-		let section = document.getElementById('section')
-		section.style.background = `url(${ backgroundImages[Math.floor(Math.random() * backgroundImages.length)] })`
-		section.style.backgroundRepeat = 'no-repeat'
-		section.style.backgroundSize = "100% 100%"
-		section.style.backgroundPosition='center'
-		section.style.backgroundAttachment = 'fixed'
+		setBackgroundImage()
 	}
+}
+
+function setBackgroundImage() {
+	console.log('Setando imagem de fundo.')
+	let section = document.getElementById('section')
+	let random = Math.floor(Math.random() * backgroundImages.length)
+	section.style.background = `url(${ backgroundImages[random] })`
+	section.style.backgroundRepeat = 'no-repeat'
+	section.style.backgroundSize = "100% 100%"
+	section.style.backgroundPosition = 'center'
+	section.style.backgroundAttachment = 'fixed'
+	console.log('backgroundImages antes de remover o link:', backgroundImages)
+	backgroundImages.splice(random, 1)
+	console.log('backgroundImages depois de remover o link:', backgroundImages)
+	if (backgroundImages.length > 0)
+		localStorage.setItem('myHomePage.backgroundImages', JSON.stringify(backgroundImages))
+	else
+		localStorage.removeItem('myHomePage.backgroundImages')
+	console.log('localStorage atualizado. Quantidade de imagens restantes: ', backgroundImages.length)
 }
 
 document.oncontextmenu = (e) => {
