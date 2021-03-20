@@ -170,7 +170,7 @@
 				box-shadow: 0 0 5px #00000090;
 				border-radius: .5rem;
 				background: #00000030;
-				border:none;
+				border: none;
 			}
 
 			.titleInput {
@@ -188,7 +188,7 @@
 				box-sizing: border-box;
 			}
 
-			.titleInput:focus{
+			.titleInput:focus {
 				background: #30303090;
 				box-shadow: inset 0 -2px 1px -1px #0099ff;
 			}
@@ -250,7 +250,7 @@
 			}
 
 			footer {
-				position:fixed;
+				position: fixed;
 				bottom: 0;
 				right: 0;
 				width: 100%;
@@ -276,8 +276,8 @@
 				display: none;
 				position: fixed;
 				left: 0;
-				top:0;
-				width:100%;
+				top: 0;
+				width: 100%;
 				height: 100vh;
 				align-items: center;
 				justify-content: center;
@@ -294,13 +294,13 @@
 				z-index: 3;
 			}
 
-			#editItemInputs{
+			#editItemInputs {
 				flex: 1;
 				display: flex;
 				flex-direction: column;
 			}
 
-			#editItemInputs input{
+			#editItemInputs input {
 				margin: 4px 0;
 				font-size: 18px;
 				border-radius: .4rem;
@@ -308,15 +308,15 @@
 				border: 1px solid transparent;
 				padding: 4px 8px;
 				background: #303030;
-				color:#ccc;
+				color: #ccc;
 			}
 
-			#editItemInputs input:focus{
+			#editItemInputs input:focus {
 				border: 1px solid #0099ff66;
 			}
-			
-			#saveEditingItemBt{
-				margin:12px 0 0;
+
+			#saveEditingItemBt {
+				margin: 12px 0 0;
 				padding: 8px;
 				border-radius: .2rem;
 				background: #454545;
@@ -325,25 +325,26 @@
 				border: 1px solid #303030;
 			}
 
-			#saveEditingItemBt:focus, #saveEditingItemBt:hover{
+			#saveEditingItemBt:focus,
+			#saveEditingItemBt:hover {
 				background: #0099ff90;
 				border: 1px solid #0099ff;
 			}
 
-			#contextMenu{
+			#contextMenu {
 				display: none;
-				position:absolute;
+				position: absolute;
 				width: 200px;
 				/* height: 100px; */
 				background: #202020;
-				color:#ccc;
+				color: #ccc;
 				border-radius: .5rem;
 				outline: none;
 				list-style: none;
 				padding: 0;
 			}
 
-			.contextMenuItem{
+			.contextMenuItem {
 				border-radius: .5rem;
 				padding: 4px 10px;
 				margin: 1px;
@@ -381,7 +382,7 @@
 			</section>
 
 			<footer>
-				&copy; Djalmir Miodutzki
+				&copy; Djalmir Miodutzki 😉
 			</footer>
 
 			<div id="editItemContainer">
@@ -404,7 +405,7 @@
 			var lists = []
 			var listsContainer = document.getElementById('listsContainer')
 
-			document.oncontextmenu=(e)=>{
+			document.oncontextmenu = (e) => {
 				e.preventDefault()
 			}
 
@@ -414,7 +415,7 @@
 			}
 
 			document.getElementById('editItemInputs').onkeypress = (e) => {
-				if(e.keyCode == 13){
+				if (e.keyCode == 13) {
 					saveEditingItem()
 				}
 			}
@@ -434,18 +435,18 @@
 						lists.map((list) => {
 							let listLi = document.createElement('li')
 							listLi.classList.add('list')
-							listLi.oncontextmenu=(e)=>{
-								if(!e.target.classList.contains('item')&&!e.target.parentElement.classList.contains('item')){
+							listLi.oncontextmenu = (e) => {
+								if (!e.target.classList.contains('item') && !e.target.parentElement.classList.contains('item')) {
 									let contextMenu = document.getElementById('contextMenu')
-									contextMenu.innerHTML=''
+									contextMenu.innerHTML = ''
 									let contextMenuItem = document.createElement('li')
 									contextMenuItem.classList.add('contextMenuItem')
-									contextMenuItem.innerText="Excluir Lista"
-									contextMenuItem.onclick=()=>{deleteList(list.id)}//criar a função
+									contextMenuItem.innerText = "Excluir Lista"
+									contextMenuItem.onclick = () => {deleteList(list.id)}//criar a função
 									contextMenu.appendChild(contextMenuItem)
-									contextMenu.style.left=e.clientX+'px'
-									contextMenu.style.top=(e.clientY+window.scrollY)+'px'
-									contextMenu.style.display='block'
+									contextMenu.style.left = e.clientX + 'px'
+									contextMenu.style.top = (e.clientY + window.scrollY) + 'px'
+									contextMenu.style.display = 'block'
 									contextMenu.focus()
 								}
 							}
@@ -474,7 +475,7 @@
 							li.classList.add('addItem')
 							li.classList.add('item')
 							li.innerText = '+'
-							li.onclick = ()=>{showItemEdition(list.id)}
+							li.onclick = () => {showItemEdition(list.id)}
 							ul.appendChild(li)
 
 							list.items.map((item) => {
@@ -499,15 +500,15 @@
 						// document.getElementById('deleteAll').style.display = 'block'
 					}
 					// else
-						// document.getElementById('deleteAll').style.display = 'none'
+					// document.getElementById('deleteAll').style.display = 'none'
 				}
 				console.log('lists: ', lists)
 			}
 
 			function addList() {
-				let id = Math.floor(1+Math.random()*9999999)
+				let id = Math.floor(1 + Math.random() * 9999999)
 				while (document.getElementById(id))
-					id = Math.floor(1+Math.random()*9999999)
+					id = Math.floor(1 + Math.random() * 9999999)
 				lists.unshift({
 					id: id,
 					title: 'Nova Lista ' + (lists.filter(list => list.title.startsWith('Nova Lista')).length + 1),
@@ -517,61 +518,75 @@
 				getLists()
 			}
 
-			function deleteList(listId){
-				lists.splice(lists.findIndex(list=>list.id==listId),1)
+			function deleteList(listId) {
+				lists.splice(lists.findIndex(list => list.id == listId), 1)
 				localStorage.setItem('myHomePage.lists', JSON.stringify(lists))
 				hideContextMenu()
 				getLists()
 			}
 
 			var editingItem
-			function showItemEdition(listId,item) {
+			function showItemEdition(listId, item) {
 				if (!item) {
-					let id = Math.floor(1+Math.random()*9999999)
+					let id = Math.floor(1 + Math.random() * 9999999)
 					while (document.getElementById(id))
-						id = Math.floor(1+Math.random()*9999999)
+						id = Math.floor(1 + Math.random() * 9999999)
 					editingItem = {
 						id: id,
 						listId: listId,
-						name : '',
-						url : ''
+						name: '',
+						url: ''
 					}
 				}
 				else {
 					editingItem = item
 				}
-				document.getElementById('shadow').style.display='block'
-				document.getElementById('editItemContainer').style.display='flex'
+				document.getElementById('shadow').style.display = 'block'
+				document.getElementById('editItemContainer').style.display = 'flex'
 				document.getElementById('itemName').focus()
 			}
 
-			function hideItemEdition(){
-				document.getElementById('shadow').style.display='none'
-				document.getElementById('editItemContainer').style.display='none'
+			function hideItemEdition() {
+				document.getElementById('shadow').style.display = 'none'
+				document.getElementById('editItemContainer').style.display = 'none'
 				editingItem = null
-				document.getElementById('itemName').value=''
-				document.getElementById('itemUrl').value=''
+				document.getElementById('itemName').value = ''
+				document.getElementById('itemUrl').value = ''
 			}
 
-			function updateEditingItem(){
+			function updateEditingItem() {
 				editingItem.name = document.getElementById('itemName').value
 				editingItem.url = document.getElementById('itemUrl').value
 			}
 
 			function saveEditingItem() {
-				if(editingItem.name.trim()=='')
+				if (editingItem.name.trim() == '')
 					document.getElementById('itemName').focus()
-				else if(editingItem.url.trim()=='')
+				else if (editingItem.url.trim() == '')
 					document.getElementById('itemUrl').focus()
-				else{
-					if(!editingItem.url.startsWith('http'))
-						editingItem.url='http://'+editingItem.url
-						// editingItem.imgSrc = `https://s2.googleusercontent.com/s2/favicons?domain_url=${editingItem.url}`
-						editingItem.imgSrc = `chrome://favicon2/?size=48&scale_factor=1x&show_fallback_monogram=&page_url=${editingItem.url}`
-					let list = lists.find(list=>list.id==editingItem.listId)
+				else {
+					if (!editingItem.url.startsWith('http'))
+						editingItem.url = 'http://' + editingItem.url
+					// editingItem.imgSrc = `https://s2.googleusercontent.com/s2/favicons?domain_url=${editingItem.url}`
+					// editingItem.imgSrc = `chrome://favicon2/?size=48&scale_factor=1x&show_fallback_monogram=&page_url=${editingItem.url}`
+					editingItem.imgSrc = fetch(`chrome://favicon2/?size=24&scale_factor=1x&show_fallback_monogram=&page_url=${ editingItem.url }`, {
+						"referrer": "",
+						"referrerPolicy": "strict-origin-when-cross-origin",
+						"body": null,
+						"method": "GET",
+						"mode": "cors"
+					})
+					// .then((res)=>{
+					// 	console.log(res.data)
+					// 	editingItem.imgSrc = res.data
+					// })
+					// .catch((err)=>{
+					// 	console.log(err)
+					// })
+					let list = lists.find(list => list.id == editingItem.listId)
 					console.log(list)
-					if(list.items.find(item=>item.id==editingItem.id))
-						list.items.splice(list.items.indexOf(list.items.find(item=>item.id==editingItem.id)),1,editingItem)
+					if (list.items.find(item => item.id == editingItem.id))
+						list.items.splice(list.items.indexOf(list.items.find(item => item.id == editingItem.id)), 1, editingItem)
 					else
 						list.items.push(editingItem)
 					localStorage.setItem('myHomePage.lists', JSON.stringify(lists))
@@ -580,9 +595,9 @@
 				}
 			}
 
-			function hideContextMenu(){
+			function hideContextMenu() {
 				let contextMenu = document.getElementById('contextMenu')
-				contextMenu.style.display='none'
+				contextMenu.style.display = 'none'
 			}
 
 			getLists()
