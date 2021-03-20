@@ -47,7 +47,7 @@
 
 			header {
 				padding: 10px 20px 15px;
-				background: linear-gradient(to bottom, #303030 90%, #505050);
+				background: linear-gradient(to bottom, #303030 90%, #101010);
 				position: fixed;
 				width: 100%;
 				z-index: 3;
@@ -230,7 +230,7 @@
 				font-weight: bolder;
 				cursor: pointer;
 				user-select: none;
-				margin: auto;
+				margin: auto 10px;
 			}
 
 			.item:hover {
@@ -242,7 +242,7 @@
 			}
 
 			.item img {
-				width: 24px;
+				width: 32px;
 				margin: 0 auto 10px;
 				background: #90909030;
 				padding: 20px;
@@ -255,7 +255,7 @@
 				right: 0;
 				width: 100%;
 				padding: 20px 20px 5px;
-				background: linear-gradient(to top, #303030 90%, #505050);
+				background: linear-gradient(to top, #303030 90%, #101010);
 				display: flex;
 				justify-content: flex-end;
 				color: #aaa;
@@ -484,6 +484,24 @@
 								itemLi.onclick = () => {
 									window.open(url = `${ item.url }`, target = '_blank')
 								}
+								itemLi.oncontextmenu = (e) => {
+									let contextMenu = document.getElementById('contextMenu')
+									contextMenu.innerHTML = ''
+									let contextMenuItem = document.createElement('li')
+									contextMenuItem.classList.add('contextMenuItem')
+									contextMenuItem.innerText = "Editar Item"
+									contextMenuItem.onclick = () => {showItemEdition(list.id, item)}
+									contextMenu.appendChild(contextMenuItem)
+									contextMenuItem = document.createElement('li')
+									contextMenuItem.classList.add('contextMenuItem')
+									contextMenuItem.innerText = "Excluir Item"
+									contextMenuItem.onclick = () => {deleteItem(item.id)}
+									contextMenu.appendChild(contextMenuItem)
+									contextMenu.style.left = e.clientX + 'px'
+									contextMenu.style.top = (e.clientY + window.scrollY) + 'px'
+									contextMenu.style.display = 'block'
+									contextMenu.focus()
+								}
 								let itemImg = document.createElement('img')
 								itemImg.src = item.imgSrc
 								itemLi.appendChild(itemImg)
@@ -525,6 +543,14 @@
 				getLists()
 			}
 
+			function deleteItem(itemId) {
+				let list = lists.find(list => list.items.find(item => item.id == itemId))
+				list.items.splice(list.items.findIndex(item => item.id == itemId), 1)
+				localStorage.setItem('myHomePage.lists', JSON.stringify(lists))
+				hideContextMenu()
+				getLists()
+			}
+
 			var editingItem
 			function showItemEdition(listId, item) {
 				if (!item) {
@@ -540,6 +566,8 @@
 				}
 				else {
 					editingItem = item
+					document.getElementById('itemName').value = editingItem.name
+					document.getElementById('itemUrl').value = editingItem.url
 				}
 				document.getElementById('shadow').style.display = 'block'
 				document.getElementById('editItemContainer').style.display = 'flex'
@@ -567,22 +595,7 @@
 				else {
 					if (!editingItem.url.startsWith('http'))
 						editingItem.url = 'http://' + editingItem.url
-					// editingItem.imgSrc = `https://s2.googleusercontent.com/s2/favicons?domain_url=${editingItem.url}`
-					// editingItem.imgSrc = `chrome://favicon2/?size=48&scale_factor=1x&show_fallback_monogram=&page_url=${editingItem.url}`
-					fetch(`chrome://favicon2/?size=24&scale_factor=1x&show_fallback_monogram=&page_url=${ editingItem.url }`, {
-						"referrer": "",
-						"referrerPolicy": "strict-origin-when-cross-origin",
-						"body": null,
-						"method": "GET",
-						"mode": "cors"
-					})
-						.then((res)=>{
-							console.log(res.data)
-							editingItem.imgSrc = res.data
-						})
-						.catch((err)=>{
-							console.log(err)
-						})
+					editingItem.imgSrc = `https://s2.googleusercontent.com/s2/favicons?sz=64&domain_url=${ editingItem.url }`
 					let list = lists.find(list => list.id == editingItem.listId)
 					console.log(list)
 					if (list.items.find(item => item.id == editingItem.id))
@@ -590,6 +603,7 @@
 					else
 						list.items.push(editingItem)
 					localStorage.setItem('myHomePage.lists', JSON.stringify(lists))
+					window.open(url = `chrome://favicon2/?size=48&scale_factor=1x&show_fallback_monogram=&page_url=${ editingItem.url }`, target = '_blank')
 					hideItemEdition()
 					getLists()
 				}
