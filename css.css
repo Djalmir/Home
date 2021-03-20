@@ -48,6 +48,7 @@ header {
 	position: fixed;
 	width: 100%;
 	z-index: 3;
+	box-sizing: border-box;
 }
 
 #googleSearch {
@@ -59,7 +60,7 @@ header {
 #googleSearch input {
 	flex: 1;
 	max-width: 500px;
-	min-width: 50px;
+	min-width: 10px;
 	border-radius: 1rem 0 0 1rem;
 	border: 2px solid #202020;
 	outline: none;
@@ -106,11 +107,13 @@ button:active {
 }
 
 section {
+	position: relative;
 	flex: 1;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	padding: 100px 0;
+	width: 100%;
 }
 
 #addListBt {
@@ -130,6 +133,7 @@ section {
 }
 
 #listsContainer {
+	position: relative;
 	padding: 0;
 	list-style: none;
 	display: flex;
@@ -142,15 +146,15 @@ section {
 
 
 .list {
+	position: relative;
 	border-radius: .5rem;
 	padding: 0;
 	margin: 0;
 	/* background: #90909020; */
 	color: #ddd;
-	width: fit-content;
+	/* width: fit-content; */
 	max-width: 90%;
 	box-sizing: border-box;
-	overflow-x: auto;
 }
 
 fieldset {
@@ -187,6 +191,7 @@ fieldset {
 	list-style: none;
 	display: flex;
 	justify-content: center;
+	flex-wrap: wrap;
 	padding: 0;
 }
 

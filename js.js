@@ -7,7 +7,7 @@ var search = searchList[Math.floor(Math.random()*4)]
 if (!localStorage.getItem('myHomePage.backgroundImages')) {
 	console.log('Adicionou o script do google')
 	let script = document.createElement('script')
-	script.src = `https://www.googleapis.com/customsearch/v1?searchType=image&q=wide+wallpaper+${ search }&imgType=photo&imgDominantColor=black&imgColorType=trans&callback=getBackgroundImages&key=AIzaSyDYrgmw2FfsFIbowl_8bJYTl4umuQCtv84&cx=5fc4b6eacb628da8f`
+	script.src = `https://www.googleapis.com/customsearch/v1?searchType=image&q=${window.innerWidth > window.innerHeight ? 'wide' : ''}+wallpaper+${ search }&imgSize=XXLARGE&imgType=photo&imgDominantColor=black&imgColorType=trans&callback=getBackgroundImages&key=AIzaSyDYrgmw2FfsFIbowl_8bJYTl4umuQCtv84&cx=5fc4b6eacb628da8f`
 	document.getElementsByTagName('head')[0].appendChild(script)
 }
 else {
@@ -35,7 +35,7 @@ function setBackgroundImage() {
 	let random = Math.floor(Math.random() * backgroundImages.length)
 	section.style.background = `url(${ backgroundImages[random] })`
 	section.style.backgroundRepeat = 'no-repeat'
-	section.style.backgroundSize = "100% 100%"
+	section.style.backgroundSize = "cover"
 	section.style.backgroundPosition = 'center'
 	section.style.backgroundAttachment = 'fixed'
 	console.log('backgroundImages antes de remover o link:', backgroundImages)
