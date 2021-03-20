@@ -382,7 +382,7 @@
 			</section>
 
 			<footer>
-				&copy; Djalmir Miodutzki 😉
+				&copy; Djalmir Miodutzki
 			</footer>
 
 			<div id="editItemContainer">
@@ -569,20 +569,20 @@
 						editingItem.url = 'http://' + editingItem.url
 					// editingItem.imgSrc = `https://s2.googleusercontent.com/s2/favicons?domain_url=${editingItem.url}`
 					// editingItem.imgSrc = `chrome://favicon2/?size=48&scale_factor=1x&show_fallback_monogram=&page_url=${editingItem.url}`
-					editingItem.imgSrc = fetch(`chrome://favicon2/?size=24&scale_factor=1x&show_fallback_monogram=&page_url=${ editingItem.url }`, {
+					fetch(`chrome://favicon2/?size=24&scale_factor=1x&show_fallback_monogram=&page_url=${ editingItem.url }`, {
 						"referrer": "",
 						"referrerPolicy": "strict-origin-when-cross-origin",
 						"body": null,
 						"method": "GET",
 						"mode": "cors"
 					})
-					// .then((res)=>{
-					// 	console.log(res.data)
-					// 	editingItem.imgSrc = res.data
-					// })
-					// .catch((err)=>{
-					// 	console.log(err)
-					// })
+						.then((res)=>{
+							console.log(res.data)
+							editingItem.imgSrc = res.data
+						})
+						.catch((err)=>{
+							console.log(err)
+						})
 					let list = lists.find(list => list.id == editingItem.listId)
 					console.log(list)
 					if (list.items.find(item => item.id == editingItem.id))
