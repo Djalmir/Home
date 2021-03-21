@@ -2,7 +2,7 @@ var lists = []
 var listsContainer = document.getElementById('listsContainer')
 var backgroundImages = []
 var recentSearches = JSON.parse(localStorage.getItem('myHomePage.recentSearches')) || []
-var searchList = ['Nature', 'Cars', 'City', 'Minimalist', 'Rain', 'Sunset', 'Ocean', 'Islands', 'Rainbow']
+var searchList = ['Nature', 'Cars', 'City', 'Rain', 'Sunset', 'Ocean', 'Islands', 'Birds', 'Snow', 'Mountain', 'Hill', 'River', 'Waterfall', 'Galaxy', 'Stars', 'Moon', 'Sky']
 var search = searchList[Math.floor(Math.random() * searchList.length)]
 var isWideScreen = window.innerWidth > window.innerHeight
 var random = Math.floor(Math.random() * backgroundImages.length)
@@ -64,7 +64,7 @@ else {
 
 function getImagesFromPexels() {
 	backgroundImages=[]
-	fetch(`https://api.pexels.com/v1/search?query=${ search }&per_page=3&size=small`, {
+	fetch(`https://api.pexels.com/v1/search?query=${ search }&per_page=80&size=small&orientation=${ isWideScreen ? 'landscape' : 'portrait' }`, {
 		headers: {
 			Authorization: "563492ad6f91700001000001aad794b0b91340189909ea050f967cab"
 		}
@@ -72,12 +72,21 @@ function getImagesFromPexels() {
 		.then((res) => {
 			return res.json()
 		})
-		.then((res) => {
+		.then(async(res) => {
 			// console.log('retorno do Pexels: ',res)
 			if (res.photos) {
-				res.photos.map((photo) => {
+				// res.photos.map((photo) => {
+				// 	backgroundImages.push(photo)
+				// })
+				for(let i = 0; i < 3; i++){
+					let photo = res.photos[Math.floor(Math.random()*res.photos.length)]
+					// console.log(photo)
+					while(backgroundImages.find(image=>image.id==photo.id)){
+						photo = res.photos[Math.floor(Math.random()*res.photos.length)]
+					}
 					backgroundImages.push(photo)
-				})
+				}
+				// console.log(backgroundImages)
 				setBackgroundImage()
 			}
 		})
