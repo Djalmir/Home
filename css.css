@@ -44,7 +44,7 @@ body{
 
 header {
 	padding: 10px 20px 15px;
-	background: linear-gradient(to bottom, #303030 90%, #101010);
+	background: linear-gradient(to bottom, #30303090 90%, #10101090);
 }
 
 #googleSearch {
@@ -58,11 +58,11 @@ header {
 	max-width: 500px;
 	min-width: 10px;
 	border-radius: 1rem 0 0 1rem;
-	border: 2px solid #202020;
+	border: 1px solid #202020cc;
 	outline: none;
 	font-size: 18px;
-	padding: 4px 8px;
-	background: #202020;
+	padding: 5px 8px;
+	background: #202020cc;
 	color: #ddd;
 }
 
@@ -76,12 +76,12 @@ button {
 
 #googleSearch button {
 	border-radius: 0 1rem 1rem 0;
-	border: 2px solid #252525;
+	border: 1px solid #252525cc;
 	font-size: 18px;
 	padding: 0 24px 0 20px;
 	width: 32px;
 	height: 32.5px;
-	background: #252525;
+	background: #252525cc;
 	color: #ddd;
 	box-sizing: border-box;
 	display: flex;
@@ -242,7 +242,7 @@ fieldset {
 
 footer {
 	padding: 14px 20px 8px;
-	background: linear-gradient(to top, #303030 90%, #101010);
+	background: linear-gradient(to top, #30303090 90%, #10101090);
 	display: flex;
 	justify-content: flex-end;
 	color: #aaa;
@@ -348,4 +348,20 @@ footer {
 
 .contextMenuItem:active {
 	opacity: .5;
+}
+
+#pexelsLinks{
+	position: absolute;
+	bottom: 0;
+	left: 20px;
+	background: #30303090;
+	border-radius: .5rem;
+	padding: 2px 8px;
+	color: #aaa;
+}
+
+#pexelsLinks a{
+	color: #bbb;
+	font-weight: bolder;
+	text-decoration: wavy;
 }

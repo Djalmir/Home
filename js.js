@@ -1,26 +1,61 @@
 var lists = []
 var listsContainer = document.getElementById('listsContainer')
 var backgroundImages = []
-var searchList = ['Nature', 'Cars', 'City', 'Minimalist', 'Rain', 'Earth', 'Lines', 'Mosaic', 'Sunset', 'Ocean', 'Islands', 'Pets', 'Rainbow']
-var search = searchList[Math.floor(Math.random()*searchList.length)]
+var recentSearches = JSON.parse(localStorage.getItem('myHomePage.recentSearches')) || []
+var searchList = ['Nature', 'Cars', 'City', 'Minimalist', 'Rain', 'Sunset', 'Ocean', 'Islands', 'Rainbow']
+var search = searchList[Math.floor(Math.random() * searchList.length)]
 
 if (!localStorage.getItem('myHomePage.backgroundImages')) {
-	console.log('Adicionou o script do google')
-	let script = document.createElement('script')
-	script.src = `https://www.googleapis.com/customsearch/v1?searchType=image&q=${window.innerWidth > window.innerHeight ? 'wide' : ''}+wallpaper+${ search }&imgSize=LARGE&rights=cc_publicdomain&imgType=photo&imgDominantColor=black&imgColorType=trans&callback=getBackgroundImages&key=AIzaSyDYrgmw2FfsFIbowl_8bJYTl4umuQCtv84&cx=5fc4b6eacb628da8f`
-	document.getElementsByTagName('head')[0].appendChild(script)
+
+	while (recentSearches.find(s => s == search)) {
+		search = searchList[Math.floor(Math.random() * searchList.length)]
+	}
+	recentSearches.push(search)
+	if (recentSearches.length == searchList.length) {
+		recentSearches = []
+		localStorage.removeItem('myHomePage.recentSearches')
+	}
+	else {
+		localStorage.setItem('myHomePage.recentSearches', JSON.stringify(recentSearches))
+	}
+	// console.log('Pesquisa: ', search)
+
+	//PEXELS
+	fetch(`https://api.pexels.com/v1/search?query=${ search }&per_page=3&orientation=${ window.innerWidth > window.innerHeight ? 'landscape' : 'portrait' }&size=small`, {
+		headers: {
+			Authorization: "563492ad6f91700001000001aad794b0b91340189909ea050f967cab"
+		}
+	})
+		.then((res) => {
+			return res.json()
+		})
+		.then((res) => {
+			// console.log('retorno do Pexels: ',res)
+			if (res.photos) {
+				res.photos.map((photo) => {
+					backgroundImages.push(photo)
+				})
+				setBackgroundImage()
+			}
+		})
+
+
+	//GOOGLE
+	// let script = document.createElement('script')
+	// script.src = `https://www.googleapis.com/customsearch/v1?searchType=image&q=${ window.innerWidth > window.innerHeight ? 'wide+' : '' }${ search }+background&rights=cc_noncommercial&imgSize=XXLARGE&imgType=photo&callback=getBackgroundImages&key=AIzaSyDYrgmw2FfsFIbowl_8bJYTl4umuQCtv84&cx=5fc4b6eacb628da8f`
+	// document.getElementsByTagName('head')[0].appendChild(script)
 }
 else {
-	console.log('Pegando links do armazenamento local')
+	// console.log('Pegando links do armazenamento local')
 	let photos = JSON.parse(localStorage.getItem('myHomePage.backgroundImages'))
-	photos.map((photoLink) => {
-		backgroundImages.push(photoLink)
+	photos.map((photo) => {
+		backgroundImages.push(photo)
 	})
 	setBackgroundImage()
 }
 
 function getBackgroundImages(res) {
-	console.log('Retorno do google: ', res)
+	// console.log('Retorno do google: ', res)
 	if (res.items) {
 		res.items.map((photo) => {
 			backgroundImages.push(photo.link)
@@ -30,22 +65,27 @@ function getBackgroundImages(res) {
 }
 
 function setBackgroundImage() {
-	console.log('Setando imagem de fundo.')
-	let section = document.getElementById('section')
+	// console.log('Setando imagem de fundo.')
+	// let section = document.getElementById('section')
 	let random = Math.floor(Math.random() * backgroundImages.length)
-	section.style.background = `url(${ backgroundImages[random] })`
-	section.style.backgroundRepeat = 'no-repeat'
-	section.style.backgroundSize = "cover"
-	section.style.backgroundPosition = 'center'
-	section.style.backgroundAttachment = 'fixed'
-	console.log('backgroundImages antes de remover o link:', backgroundImages)
+	document.getElementById('photoLink').href = backgroundImages[random].url
+	document.getElementById('photographerLink').href = backgroundImages[random].photographer_url
+	document.getElementById('photographerName').innerText = backgroundImages[random].photographer
+	document.body.style.background = `url(${ backgroundImages[random].src.original })`
+	document.body.style.backgroundRepeat = 'no-repeat'
+	// document.body.style.backgroundSize = "contain"
+	document.body.style.backgroundSize = "cover"
+	document.body.style.backgroundPosition = 'center'
+	document.body.style.backgroundAttachment = 'fixed'
+	// console.log('backgroundImages: ',backgroundImages)
+	// console.log('backgroundImages antes de remover o link:', backgroundImages)
 	backgroundImages.splice(random, 1)
-	console.log('backgroundImages depois de remover o link:', backgroundImages)
+	// console.log('backgroundImages depois de remover o link:', backgroundImages)
 	if (backgroundImages.length > 0)
 		localStorage.setItem('myHomePage.backgroundImages', JSON.stringify(backgroundImages))
 	else
 		localStorage.removeItem('myHomePage.backgroundImages')
-	console.log('localStorage atualizado. Quantidade de imagens restantes: ', backgroundImages.length)
+	// console.log('localStorage atualizado. Quantidade de imagens restantes: ', backgroundImages.length)
 }
 
 document.oncontextmenu = (e) => {
@@ -90,7 +130,7 @@ function getLists() {
 						contextMenuItem.innerText = "Excluir Lista"
 						contextMenuItem.onclick = () => {deleteList(list.id)}
 						contextMenu.appendChild(contextMenuItem)
-						contextMenu.style.left = e.clientX + 'px'
+						contextMenu.style.left = (e.clientX + 200 > window.innerWidth ? window.innerWidth - 200 : e.clientX) + 'px'
 						contextMenu.style.top = (e.clientY + window.scrollY) + 'px'
 						contextMenu.style.display = 'block'
 						contextMenu.focus()
@@ -162,7 +202,7 @@ function getLists() {
 		// else
 		// document.getElementById('deleteAll').style.display = 'none'
 	}
-	console.log('lists: ', lists)
+	// console.log('lists: ', lists)
 }
 
 function addList() {
@@ -239,7 +279,7 @@ function saveEditingItem() {
 			editingItem.url = 'http://' + editingItem.url
 		editingItem.imgSrc = `https://s2.googleusercontent.com/s2/favicons?sz=64&domain_url=${ editingItem.url }`
 		let list = lists.find(list => list.id == editingItem.listId)
-		console.log(list)
+		// console.log(list)
 		if (list.items.find(item => item.id == editingItem.id))
 			list.items.splice(list.items.indexOf(list.items.find(item => item.id == editingItem.id)), 1, editingItem)
 		else
