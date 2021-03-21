@@ -20,7 +20,29 @@ if (!localStorage.getItem('myHomePage.backgroundImages')) {
 	}
 	// console.log('Pesquisa: ', search)
 
-	//PEXELS
+	getImagesFromPexels()
+
+	//GOOGLE
+	// let script = document.createElement('script')
+	// script.src = `https://www.googleapis.com/customsearch/v1?searchType=image&q=${ window.innerWidth > window.innerHeight ? 'wide+' : '' }${ search }+background&rights=cc_noncommercial&imgSize=XXLARGE&imgType=photo&callback=getBackgroundImages&key=AIzaSyDYrgmw2FfsFIbowl_8bJYTl4umuQCtv84&cx=5fc4b6eacb628da8f`
+	// document.getElementsByTagName('head')[0].appendChild(script)
+}
+else {
+	// console.log('Pegando links do armazenamento local')
+	try{
+		let photos = JSON.parse(localStorage.getItem('myHomePage.backgroundImages'))
+		photos.map((photo) => {
+			backgroundImages.push(photo)
+		})
+		setBackgroundImage()
+	}
+	catch{
+		getImagesFromPexels()
+	}
+}
+
+function getImagesFromPexels() {
+	backgroundImages=[]
 	fetch(`https://api.pexels.com/v1/search?query=${ search }&per_page=3&orientation=${ window.innerWidth > window.innerHeight ? 'landscape' : 'portrait' }&size=small`, {
 		headers: {
 			Authorization: "563492ad6f91700001000001aad794b0b91340189909ea050f967cab"
@@ -38,20 +60,6 @@ if (!localStorage.getItem('myHomePage.backgroundImages')) {
 				setBackgroundImage()
 			}
 		})
-
-
-	//GOOGLE
-	// let script = document.createElement('script')
-	// script.src = `https://www.googleapis.com/customsearch/v1?searchType=image&q=${ window.innerWidth > window.innerHeight ? 'wide+' : '' }${ search }+background&rights=cc_noncommercial&imgSize=XXLARGE&imgType=photo&callback=getBackgroundImages&key=AIzaSyDYrgmw2FfsFIbowl_8bJYTl4umuQCtv84&cx=5fc4b6eacb628da8f`
-	// document.getElementsByTagName('head')[0].appendChild(script)
-}
-else {
-	// console.log('Pegando links do armazenamento local')
-	let photos = JSON.parse(localStorage.getItem('myHomePage.backgroundImages'))
-	photos.map((photo) => {
-		backgroundImages.push(photo)
-	})
-	setBackgroundImage()
 }
 
 function getBackgroundImages(res) {
