@@ -73,7 +73,7 @@ function getImagesFromPexels() {
 			return res.json()
 		})
 		.then((res) => {
-			console.log('retorno do Pexels: ',res)
+			// console.log('retorno do Pexels: ',res)
 			if (res.photos) {
 				res.photos.map((photo) => {
 					backgroundImages.push(photo)
