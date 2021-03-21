@@ -3,6 +3,7 @@
 body{
 	background:linear-gradient(to bottom, #101010, #303030, #101010);
 	background-attachment: fixed;
+
 }
 
 ::-webkit-scrollbar {
@@ -159,8 +160,16 @@ fieldset {
 	padding: 40px 18px 12px;
 	box-shadow: 0 0 5px #00000090;
 	border-radius: .5rem;
-	background: #00000090;
+	background: #10101020;
 	border: none;
+}
+
+fieldset:hover{
+	background: #10101090;
+}
+
+fieldset:hover .titleInput{
+	background: #50505090;
 }
 
 .titleInput {
@@ -168,7 +177,7 @@ fieldset {
 	top: 0;
 	left: 0;
 	width: 100%;
-	background: #90909080;
+	background: #50505020;
 	border-radius: .5rem .5rem 0 0;
 	padding: 6px 12px;
 	border: none;
@@ -176,10 +185,11 @@ fieldset {
 	color: #ddd;
 	line-height: 20px;
 	box-sizing: border-box;
+	font-weight: bolder;
 }
 
 .titleInput:focus {
-	background: #30303090;
+	background: #30303090!important;
 	box-shadow: inset 0 -2px 1px -1px #0099ff;
 }
 

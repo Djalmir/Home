@@ -44,7 +44,7 @@ else {
 
 function getImagesFromPexels() {
 	backgroundImages=[]
-	fetch(`https://api.pexels.com/v1/search?query=${ search }&per_page=3&orientation=${ window.innerWidth > window.innerHeight ? 'landscape' : 'portrait' }&size=small`, {
+	fetch(`https://api.pexels.com/v1/search?query=${ search }&per_page=3&size=small`, {
 		headers: {
 			Authorization: "563492ad6f91700001000001aad794b0b91340189909ea050f967cab"
 		}
@@ -53,7 +53,7 @@ function getImagesFromPexels() {
 			return res.json()
 		})
 		.then((res) => {
-			// console.log('retorno do Pexels: ',res)
+			console.log('retorno do Pexels: ',res)
 			if (res.photos) {
 				res.photos.map((photo) => {
 					backgroundImages.push(photo)
@@ -74,27 +74,26 @@ function getBackgroundImages(res) {
 }
 
 function setBackgroundImage() {
+	
 	// console.log('Setando imagem de fundo.')
 	// let section = document.getElementById('section')
 	let random = Math.floor(Math.random() * backgroundImages.length)
 	document.getElementById('photoLink').href = backgroundImages[random].url
 	document.getElementById('photographerLink').href = backgroundImages[random].photographer_url
 	document.getElementById('photographerName').innerText = backgroundImages[random].photographer
-	document.body.style.background = `url(${ backgroundImages[random].src.original })`
+	// document.body.style.background = `url(${ backgroundImages[random].src.original })`
+	document.body.style.background = `url(${ window.innerWidth > window.innerHeight ? backgroundImages[random].src.landscape : backgroundImages[random].src.portrait })`
 	document.body.style.backgroundRepeat = 'no-repeat'
-	// document.body.style.backgroundSize = "contain"
+	document.body.style.backgroundColor = "#101010"
 	document.body.style.backgroundSize = "cover"
 	document.body.style.backgroundPosition = 'center'
 	document.body.style.backgroundAttachment = 'fixed'
 	// console.log('backgroundImages: ',backgroundImages)
-	// console.log('backgroundImages antes de remover o link:', backgroundImages)
 	backgroundImages.splice(random, 1)
-	// console.log('backgroundImages depois de remover o link:', backgroundImages)
 	if (backgroundImages.length > 0)
 		localStorage.setItem('myHomePage.backgroundImages', JSON.stringify(backgroundImages))
 	else
 		localStorage.removeItem('myHomePage.backgroundImages')
-	// console.log('localStorage atualizado. Quantidade de imagens restantes: ', backgroundImages.length)
 }
 
 document.oncontextmenu = (e) => {
