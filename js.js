@@ -4,6 +4,27 @@ var backgroundImages = []
 var recentSearches = JSON.parse(localStorage.getItem('myHomePage.recentSearches')) || []
 var searchList = ['Nature', 'Cars', 'City', 'Minimalist', 'Rain', 'Sunset', 'Ocean', 'Islands', 'Rainbow']
 var search = searchList[Math.floor(Math.random() * searchList.length)]
+var isWideScreen = window.innerWidth > window.innerHeight
+var random = Math.floor(Math.random() * backgroundImages.length)
+var imageInUse
+
+document.body.onresize=()=>{
+	let oldValue = isWideScreen
+	if (isWideScreen && window.innerWidth < window.innerHeight)
+		isWideScreen = false
+	if (!isWideScreen && window.innerWidth > window.innerHeight)
+		isWideScreen = true
+
+	if(oldValue!=isWideScreen){
+		console.log('isWideScreen: ',isWideScreen)
+		document.body.style.background = `url(${ isWideScreen ? imageInUse.src.landscape : imageInUse.src.portrait })`
+		document.body.style.backgroundRepeat = 'no-repeat'
+		document.body.style.backgroundColor = "#101010"
+		document.body.style.backgroundSize = "cover"
+		document.body.style.backgroundPosition = 'center'
+		document.body.style.backgroundAttachment = 'fixed'
+	}
+}
 
 if (!localStorage.getItem('myHomePage.backgroundImages')) {
 
@@ -74,21 +95,21 @@ function getBackgroundImages(res) {
 }
 
 function setBackgroundImage() {
-	
 	// console.log('Setando imagem de fundo.')
 	// let section = document.getElementById('section')
-	let random = Math.floor(Math.random() * backgroundImages.length)
+	random = Math.floor(Math.random() * backgroundImages.length)
 	document.getElementById('photoLink').href = backgroundImages[random].url
 	document.getElementById('photographerLink').href = backgroundImages[random].photographer_url
 	document.getElementById('photographerName').innerText = backgroundImages[random].photographer
 	// document.body.style.background = `url(${ backgroundImages[random].src.original })`
-	document.body.style.background = `url(${ window.innerWidth > window.innerHeight ? backgroundImages[random].src.landscape : backgroundImages[random].src.portrait })`
+	document.body.style.background = `url(${ isWideScreen ? backgroundImages[random].src.landscape : backgroundImages[random].src.portrait })`
 	document.body.style.backgroundRepeat = 'no-repeat'
 	document.body.style.backgroundColor = "#101010"
 	document.body.style.backgroundSize = "cover"
 	document.body.style.backgroundPosition = 'center'
 	document.body.style.backgroundAttachment = 'fixed'
 	// console.log('backgroundImages: ',backgroundImages)
+	imageInUse = backgroundImages[random]
 	backgroundImages.splice(random, 1)
 	if (backgroundImages.length > 0)
 		localStorage.setItem('myHomePage.backgroundImages', JSON.stringify(backgroundImages))
