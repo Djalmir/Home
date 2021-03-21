@@ -16,7 +16,6 @@ document.body.onresize=()=>{
 		isWideScreen = true
 
 	if(oldValue!=isWideScreen){
-		console.log('isWideScreen: ',isWideScreen)
 		document.body.style.background = `url(${ isWideScreen ? imageInUse.src.landscape : imageInUse.src.portrait })`
 		document.body.style.backgroundRepeat = 'no-repeat'
 		document.body.style.backgroundColor = "#101010"
