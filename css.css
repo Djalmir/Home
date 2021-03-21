@@ -3,6 +3,7 @@
 body{
 	background:linear-gradient(to bottom, #101010, #303030, #101010);
 	background-attachment: fixed;
+	height: 100vh;
 }
 
 ::-webkit-scrollbar {

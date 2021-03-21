@@ -37,6 +37,7 @@ else {
 		setBackgroundImage()
 	}
 	catch{
+		localStorage.removeItem('myHomePage.backgroundImages')
 		getImagesFromPexels()
 	}
 }
