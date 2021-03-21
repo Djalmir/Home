@@ -83,7 +83,7 @@ function setBackgroundImage() {
 	document.body.style.background = `url(${ backgroundImages[random].src.original })`
 	document.body.style.backgroundRepeat = 'no-repeat'
 	// document.body.style.backgroundSize = "contain"
-	// document.body.style.backgroundSize = "100vw 100vh"
+	document.body.style.backgroundSize = "cover"
 	document.body.style.backgroundPosition = 'center'
 	document.body.style.backgroundAttachment = 'fixed'
 	// console.log('backgroundImages: ',backgroundImages)
