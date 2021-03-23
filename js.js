@@ -8,14 +8,14 @@ var isWideScreen = window.innerWidth > window.innerHeight
 var random = Math.floor(Math.random() * backgroundImages.length)
 var imageInUse
 
-document.body.onresize=()=>{
+document.body.onresize = () => {
 	let oldValue = isWideScreen
 	if (isWideScreen && window.innerWidth < window.innerHeight)
 		isWideScreen = false
 	if (!isWideScreen && window.innerWidth > window.innerHeight)
 		isWideScreen = true
 
-	if(oldValue!=isWideScreen){
+	if (oldValue != isWideScreen) {
 		document.body.style.background = `url(${ isWideScreen ? imageInUse.src.landscape : imageInUse.src.portrait })`
 		document.body.style.backgroundRepeat = 'no-repeat'
 		document.body.style.backgroundColor = "#101010"
@@ -49,21 +49,21 @@ if (!localStorage.getItem('myHomePage.backgroundImages')) {
 }
 else {
 	// console.log('Pegando links do armazenamento local')
-	try{
+	try {
 		let photos = JSON.parse(localStorage.getItem('myHomePage.backgroundImages'))
 		photos.map((photo) => {
 			backgroundImages.push(photo)
 		})
 		setBackgroundImage()
 	}
-	catch{
+	catch {
 		localStorage.removeItem('myHomePage.backgroundImages')
 		getImagesFromPexels()
 	}
 }
 
 function getImagesFromPexels() {
-	backgroundImages=[]
+	backgroundImages = []
 	fetch(`https://api.pexels.com/v1/search?query=${ search }&per_page=80&size=small&orientation=${ isWideScreen ? 'landscape' : 'portrait' }`, {
 		headers: {
 			Authorization: "563492ad6f91700001000001aad794b0b91340189909ea050f967cab"
@@ -72,17 +72,17 @@ function getImagesFromPexels() {
 		.then((res) => {
 			return res.json()
 		})
-		.then(async(res) => {
+		.then(async (res) => {
 			// console.log('retorno do Pexels: ',res)
 			if (res.photos) {
 				// res.photos.map((photo) => {
 				// 	backgroundImages.push(photo)
 				// })
-				for(let i = 0; i < 3; i++){
-					let photo = res.photos[Math.floor(Math.random()*res.photos.length)]
+				for (let i = 0; i < 3; i++) {
+					let photo = res.photos[Math.floor(Math.random() * res.photos.length)]
 					// console.log(photo)
-					while(backgroundImages.find(image=>image.id==photo.id)){
-						photo = res.photos[Math.floor(Math.random()*res.photos.length)]
+					while (backgroundImages.find(image => image.id == photo.id)) {
+						photo = res.photos[Math.floor(Math.random() * res.photos.length)]
 					}
 					backgroundImages.push(photo)
 				}
@@ -146,7 +146,7 @@ document.getElementById('editItemInputs').onkeydown = (e) => {
 function searchSubmit() {
 	let search = document.getElementById('searchInput').value
 	if (search.trim() !== '')
-		window.open(url = `http://google.com/search?q=${ search }`, target = `_blank`)
+		location.href = `http://google.com/search?q=${ search }`
 }
 
 function getLists() {
@@ -201,7 +201,7 @@ function getLists() {
 					let itemLi = document.createElement('li')
 					itemLi.classList.add('item')
 					itemLi.onclick = () => {
-						window.open(url = `${ item.url }`, target = '_blank')
+						location.href = item.url
 					}
 					itemLi.oncontextmenu = (e) => {
 						let contextMenu = document.getElementById('contextMenu')
