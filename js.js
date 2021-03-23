@@ -216,7 +216,7 @@ function getLists() {
 						contextMenuItem.innerText = "Excluir Item"
 						contextMenuItem.onclick = () => {deleteItem(item.id)}
 						contextMenu.appendChild(contextMenuItem)
-						contextMenu.style.left = e.clientX + 'px'
+						contextMenu.style.left = (e.clientX + 200 > window.innerWidth ? window.innerWidth - 200 : e.clientX) + 'px'
 						contextMenu.style.top = (e.clientY + window.scrollY) + 'px'
 						contextMenu.style.display = 'block'
 						contextMenu.focus()

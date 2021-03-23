@@ -1,9 +1,13 @@
 @charset "UTF-8";
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@400;700&display=swap');
+
 body{
 	background:linear-gradient(to bottom, #101010, #303030, #101010);
 	background-attachment: fixed;
-
+	font-family: 'Roboto', sans-serif;
+	letter-spacing: 1px;
 }
 
 ::-webkit-scrollbar {
@@ -57,14 +61,15 @@ header {
 #googleSearch input {
 	flex: 1;
 	max-width: 500px;
-	min-width: 10px;
+	height: 32px;
 	border-radius: 1rem 0 0 1rem;
 	border: 1px solid #202020cc;
 	outline: none;
-	font-size: 18px;
-	padding: 5px 8px;
+	padding: 0 8px;
 	background: #202020cc;
 	color: #ddd;
+	font-family: 'Roboto', sans-serif;
+	font-size: 18px;	
 }
 
 button {
@@ -78,29 +83,29 @@ button {
 #googleSearch button {
 	border-radius: 0 1rem 1rem 0;
 	border: 1px solid #252525cc;
-	font-size: 18px;
 	padding: 0 24px 0 20px;
 	width: 32px;
-	height: 32.5px;
+	height: 34px;
 	background: #252525cc;
 	color: #ddd;
 	box-sizing: border-box;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	transform-origin: left;
 }
 
 #googleSearch button img {
-	width: 20px;
-	height: 20px;
+	width: 22px;
+	height: 22px;
 }
 
 button:hover {
-	opacity: .8;
+	transform: scale(1.03);
 }
 
 button:active {
-	opacity: .5;
+	transform: scale(.98);
 }
 
 section {
@@ -125,6 +130,10 @@ section {
 	box-shadow: inset 0 0 5px #00000090;
 }
 
+#addListBt:hover{
+	background-color: #909090cc;
+}
+
 #deleteAll {
 	background-color: #ff000077;
 }
@@ -141,7 +150,6 @@ section {
 	width: 100%;
 }
 
-
 .list {
 	position: relative;
 	border-radius: .5rem;
@@ -157,15 +165,17 @@ section {
 fieldset {
 	position: relative;
 	margin: 15px;
-	padding: 40px 18px 12px;
+	padding: 36px 12px 8px;
+	min-width: 100px;
 	box-shadow: 0 0 5px #00000090;
 	border-radius: .5rem;
 	background: #10101020;
 	border: none;
+	transition: .2s;
 }
 
 fieldset:hover{
-	background: #10101090;
+	background: #101010cc;
 }
 
 fieldset:hover .titleInput{
@@ -179,7 +189,7 @@ fieldset:hover .titleInput{
 	width: 100%;
 	background: #50505020;
 	border-radius: .5rem .5rem 0 0;
-	padding: 6px 12px;
+	padding: 3px 12px;
 	border: none;
 	outline: none;
 	color: #ddd;
@@ -203,51 +213,55 @@ fieldset:hover .titleInput{
 
 .item {
 	/* background: #90909030; */
-	margin: 5px;
+	margin: 5px 5px 0;
 	width: 70px;
 	border-radius: .5rem;
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-start;
 	align-items: center;
 	flex-direction: column;
 	cursor: pointer;
 	user-select: none;
-	font-size: 14px;
-	padding: 10px;
+	font-size: 12px;
+	padding: 0;
 	box-sizing: content-box;
-	box-shadow: inset 0 0 5px #00000090;
-	background: #30303060;
+	text-align: center;
+	/* box-shadow: inset 0 0 5px #00000090;
+	background: #30303060; */
 }
 
 .addItem {
 	background: #90909060;
+	color: #909090;
 	padding: 0;
-	height: 70px;
+	width: 50px;
+	height: 50px;
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-size: 32px;
-	font-weight: bolder;
+	font-size: 25px;
+	font-weight: bold;
 	cursor: pointer;
 	user-select: none;
 	margin: auto 10px;
+	box-shadow: inset 0 0 5px #00000090;
 }
 
 .item:hover {
-	opacity: .8;
+	transform: scale(1.03);
 }
 
 .item:active {
-	opacity: .5;
+	transform: scale(.98);
 }
 
 .item img {
-	width: 32px;
+	width: 42px;
 	margin: 0 auto 10px;
 	background: #90909030;
-	padding: 20px;
-	border-radius: .5rem;
+	padding: 8px;
+	border-radius: 50%;
 }
 
 footer {
@@ -368,6 +382,7 @@ footer {
 	border-radius: .5rem;
 	padding: 2px 8px;
 	color: #aaa;
+	font-size: 12px;
 }
 
 #pexelsLinks a{
