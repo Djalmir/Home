@@ -15,8 +15,12 @@
 		<div id="container">
 			<header>
 				<div id="googleSearch">
-					<input type="text" id="searchInput" placeholder="Pesquisar no Google">
-					<button onclick="searchSubmit()"><img src="./search.svg" /></button>
+					<input type="text" id="searchInput" placeholder="Pesquisar no Google" autocomplete="off"/>
+					<button onclick="searchSubmit()"><img src="./imgs/search.svg" /></button>
+				</div>
+				<div id="userDiv">
+					<button id="loginBt" onclick="showHideAside()">Login</button>
+					<button id='userNameBt' style="display: none;" onclick="showHideAside()"></button>
 				</div>
 			</header>
 			<section id="section">
@@ -25,11 +29,67 @@
 				<ul id="listsContainer"></ul>
 				<p id="pexelsLinks"><a id="photoLink" target="_blank">Foto</a> de <a id="photographerLink" target="_blank"><span id="photographerName"></span></a> no <a href="https://pexels.com" target="_blank">Pexels</a>.</p>
 			</section>
+			<div id="asideShadow" class="shadow" onclick="showHideAside()"></div>
+			<aside id="aside">
+				<div id="asideTop"></div>
+				<span id="closeAsideBt" onclick="showHideAside()">x</span>
+				<div id="notLoggedContainer">
+					<div id="loginContainer" style="display: block;">
+						<div class="welcomeMsg">
+							<h1>
+								Boas vindas!
+							</h1>
+							<p>
+								Faça login em sua conta
+								<b>Razion</b> para manter suas listas de atalhos armazenadas em segurança, e sincronizadas entre todos os seus dispositivos!
+							</p>
+						</div>
+						<div id="loginFormOuter">
+							<div id="loginForm">
+								<input type="email" id="emailInput" placeholder="Email"/>
+								<input type="password" id="passwordInput" placeholder="Senha"/>
+								<button onclick="login()" id="formLoginBt">Entrar</button>
+							</div>
+							<p>
+								Ainda não tem um cadastro? <br />
+								<u style="cursor: pointer;" onclick="showSignupForm()">Clique aqui</u> e cadastre-se gratuitamente!
+							</p>
+						</div>
+					</div>
+					<div id="signupContainer" style="display: none;">
+						<div class="welcomeMsg">
+							<h1>Uma conta.<br/>Todas as vantagens!</h1>
+							<p>
+								Com uma única conta você tem acesso gratuito a todos os produtos oferecidos pela
+								<b>Razion</b>!
+							</p>
+						</div>
+						<div id="signupFormOuter">
+							<div id="signupForm">
+									<input type="text" id="signupNameInput" placeholder="Nome"/>
+									<input type="email" id="signupEmailInput" placeholder="E-mail"/>
+									<input type="password" id="signupPasswordInput" placeholder="Senha"/>
+									<input type="password" id="signupConfirmPasswordInput" placeholder="Confirme a senha"/>
+									<button id="signupBt" onclick="signup()">Cadastrar</button>
+							</div>
+							<p>
+								Já tem um cadastro?
+								<br />
+								<u style="cursor: pointer;" onclick="showLoginForm()">Fazer Login</u>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div id="loggedContainer" style="display: none;">
+					<h1 id="userNameH1"></h1>
+					<button id="logoutBt" onclick="logout()">Sair</button>
+				</div>
+			</aside>
 			<footer>
-				&copy; 2021 - por Djalmir Miodutzki
+				&copy; 2021 - Djalmir Miodutzki
 			</footer>
 			<div id="editItemContainer">
-				<div id="shadow" onclick="hideItemEdition()"></div>
+				<div id="itemShadow" class="shadow" onclick="hideItemEdition()"></div>
 				<div id="editItemDiv">
 					<div id="editItemInputs">
 						<input type="text" placeholder="Nome" id="itemName" onkeyup="updateEditingItem()" maxlength="20">
@@ -39,7 +99,23 @@
 				</div>
 			</div>
 			<ul id="contextMenu" focusable="true" tabindex="0" onblur="hideContextMenu()"></ul>
+			<div id="loadingContainer">
+				<div id="loadingShadow"></div>
+				<img src="./imgs/loading.svg">
+			</div>
+			<div id="messageContainer">
+				<div id="messageShadow" onclick="hideMessage()"></div>
+				<div id="messageDiv">
+					<div id="messageHeader">Título da Mensagem</div>
+					<p id="messageBody">Corpo da Mensagem</p>
+					<div id="messageFooter">
+						<button id="messageOkBt" onclick="hideMessage()">Ok</button>
+					</div>
+				</div>
+			</div>
 		</div>
+		<script src="https://cdn.jsdelivr.net/gh/Djalmir/consoleMobile@0.1.8/console.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 		<script src="js.js"></script>
 	</body>
 
