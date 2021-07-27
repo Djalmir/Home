@@ -28,6 +28,7 @@ Axios.interceptors.response.use((res) => {
 })
 
 var lists = []
+var container = document.getElementById('container')
 var listsContainer = document.getElementById('listsContainer')
 var backgroundImages = []
 var recentSearches = JSON.parse(localStorage.getItem('myHomePage.recentSearches')) || []
@@ -253,7 +254,7 @@ function createListsVisual() {
 				contextMenuItem.onclick = () => {deleteList(list)}
 				contextMenu.appendChild(contextMenuItem)
 				contextMenu.style.left = (e.clientX + 200 > window.innerWidth ? window.innerWidth - 200 : e.clientX) + 'px'
-				contextMenu.style.top = (e.clientY + window.scrollY) + 'px'
+				contextMenu.style.top = (e.clientY + container.scrollTop) + 'px'
 				contextMenu.style.display = 'block'
 				contextMenu.focus()
 			}
@@ -308,7 +309,7 @@ function createListsVisual() {
 				contextMenuItem.onclick = () => {deleteItem(item._id)}
 				contextMenu.appendChild(contextMenuItem)
 				contextMenu.style.left = (e.clientX + 200 > window.innerWidth ? window.innerWidth - 200 : e.clientX) + 'px'
-				contextMenu.style.top = (e.clientY + window.scrollY) + 'px'
+				contextMenu.style.top = (e.clientY + container.scrollTop) + 'px'
 				contextMenu.style.display = 'block'
 				contextMenu.focus()
 			}
