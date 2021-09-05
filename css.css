@@ -385,6 +385,7 @@ fieldset:hover .titleInput {
 	padding: 0;
 	box-sizing: content-box;
 	text-align: center;
+	-webkit-tap-highlight-color: transparent;
 	/* box-shadow: inset 0 0 5px #00000090;
 	background: #30303060; */
 }
@@ -405,6 +406,7 @@ fieldset:hover .titleInput {
 	user-select: none;
 	margin: auto 10px;
 	box-shadow: inset 0 0 5px #00000090;
+	-webkit-tap-highlight-color: transparent;
 }
 
 .item:hover {
