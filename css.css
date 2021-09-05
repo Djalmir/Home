@@ -353,6 +353,7 @@ fieldset:hover .titleInput {
 	line-height: 20px;
 	box-sizing: border-box;
 	font-weight: bolder;
+	z-index: 1;
 }
 
 .titleInput:focus {

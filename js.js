@@ -186,7 +186,7 @@ function getLists() {
 		Axios.get('homePage/list/listAll')
 			.then((res) => {
 				lists = res.data
-				console.log(lists)
+				// console.log(lists)
 				createListsVisual()
 			})
 	}
@@ -262,21 +262,31 @@ function createListsVisual() {
 		let fieldset = document.createElement('fieldset')
 		let legend = document.createElement('legend')
 		let titleInput = document.createElement('input')
+		let lastTitle
 		titleInput.classList.add('titleInput')
 		titleInput.value = list.title
-		titleInput.onkeypress = (e) => {
+		titleInput.onfocus = () => {
+			lastTitle = titleInput.value
+		}
+		titleInput.onkeydown = (e) => {
 			if (e.key == 'Enter')
 				titleInput.blur()
+			else if(e.key == 'Escape') {
+				titleInput.value = lastTitle
+				titleInput.blur()
+			}
 		}
 		titleInput.onblur = () => {
-			list.title = titleInput.value
-			if (user) {
-				Axios.put(`homePage/list/update/${ list._id }`, {
-					title: list.title
-				})
+			if (titleInput.value != lastTitle) {
+				list.title = titleInput.value
+				if (user) {
+					Axios.put(`homePage/list/update/${ list._id }`, {
+						title: list.title
+					})
+				}
+				else
+					localStorage.setItem('myHomePage.lists', JSON.stringify(lists))
 			}
-			else
-				localStorage.setItem('myHomePage.lists', JSON.stringify(lists))
 		}
 		legend.appendChild(titleInput)
 		fieldset.appendChild(legend)
@@ -559,7 +569,7 @@ function signup() {
 		})
 			.then((res) => {
 				showMessage('Oba!', 'Cadastro efetuado com sucesso!\nBoas vindas!')
-				console.log('res.data: ', res.data)
+				// console.log('res.data: ', res.data)
 				user = res.data
 				localStorage.setItem('Razion.user', JSON.stringify(user))
 				Axios.defaults.headers.user_id = user._id
