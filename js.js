@@ -32,11 +32,12 @@ var container = document.getElementById('container')
 var listsContainer = document.getElementById('listsContainer')
 var backgroundImages = []
 var recentSearches = JSON.parse(localStorage.getItem('myHomePage.recentSearches')) || []
-var searchList = ['Nature', 'Cars', 'City', 'Rain', 'Sunset', 'Ocean', 'Islands', 'Birds', 'Snow', 'Mountain', 'Hill', 'River', 'Waterfall', 'Galaxy', 'Stars', 'Moon', 'Sky']
+var searchList = ['Nature', 'City', 'Rain', 'Sunset', 'Ocean', 'Islands', 'Birds', 'Snow', 'Mountains', 'Hills', 'River', 'Waterfall', 'Galaxy', 'Stars', 'Moon', 'Sky']
 var search = searchList[Math.floor(Math.random() * searchList.length)]
 var isWideScreen = window.innerWidth > window.innerHeight
 var random = Math.floor(Math.random() * backgroundImages.length)
 var imageInUse
+var newList = false
 
 document.body.onresize = () => {
 	let oldValue = isWideScreen
@@ -176,7 +177,7 @@ document.getElementById('editItemInputs').onkeydown = (e) => {
 function searchSubmit() {
 	let search = document.getElementById('searchInput').value
 	if (search.trim() !== '')
-		location.href = `http://google.com/search?q=${ search }`
+		window.open(`http://google.com/search?q=${ search }`)
 }
 
 function getLists() {
@@ -203,19 +204,21 @@ function getLists() {
 }
 
 function addList() {
+	newList = true
 	if (user) {
 		Axios.post('homePage/list/create', {
 			title: 'Nova Lista ' + (lists.filter(list => list.title.startsWith('Nova Lista')).length + 1)
 		})
 			.then(() => {
 				getLists()
+				document.querySelector('#container').scrollTo(0, document.querySelector('#container').innerHeight)
 			})
 	}
 	else {
 		let _id = Math.floor(1 + Math.random() * 9999999)
 		while (document.getElementById(_id))
 			_id = Math.floor(1 + Math.random() * 9999999)
-		lists.unshift({
+		lists.push({
 			_id: _id,
 			title: 'Nova Lista ' + (lists.filter(list => list.title.startsWith('Nova Lista')).length + 1),
 			items: []
@@ -271,7 +274,7 @@ function createListsVisual() {
 		titleInput.onkeydown = (e) => {
 			if (e.key == 'Enter')
 				titleInput.blur()
-			else if(e.key == 'Escape') {
+			else if (e.key == 'Escape') {
 				titleInput.value = lastTitle
 				titleInput.blur()
 			}
@@ -303,7 +306,7 @@ function createListsVisual() {
 			let itemLi = document.createElement('li')
 			itemLi.classList.add('item')
 			itemLi.onclick = () => {
-				location.href = item.url
+				window.open(item.url)
 			}
 			itemLi.oncontextmenu = (e) => {
 				let contextMenu = document.getElementById('contextMenu')
@@ -328,6 +331,10 @@ function createListsVisual() {
 			itemLi.appendChild(itemImg)
 			let itemName = document.createElement('span')
 			itemName.innerText = item.name
+			itemName.style = `
+				width:125%;
+				word-wrap: break-word;
+			`
 			itemLi.appendChild(itemName)
 			ul.appendChild(itemLi)
 		})
@@ -335,7 +342,12 @@ function createListsVisual() {
 		fieldset.appendChild(ul)
 		listLi.appendChild(fieldset)
 		listsContainer.appendChild(listLi)
+
 	})
+	if (newList) {
+		newList = false
+		document.querySelector('#container').scrollTo(0, document.querySelector('#container').scrollHeight)
+	}
 }
 
 function deleteItem(itemId) {

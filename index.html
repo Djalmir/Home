@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="icon" href="home.ico">
 		<link rel="stylesheet" href="css.css">
-		<meta name="theme-color" content="#30303090">
+		<meta name="theme-color" content="#202020">
 		<title>Home</title>
 	</head>
 
@@ -32,7 +32,12 @@
 			<div id="asideShadow" class="shadow" onclick="showHideAside()"></div>
 			<aside id="aside">
 				<div id="asideTop"></div>
-				<span id="closeAsideBt" onclick="showHideAside()">x</span>
+				<span id="closeAsideBt" onclick="showHideAside()">
+					<svg width="26" height="26" viewBox="0 0 26 26" stroke="#fff" stroke-width="5" stroke-linecap="round">
+						<line x1="8" y1="8" x2="18" y2="18"/>
+						<line x1="18" y1="8" x2="8" y2="18"/>
+					</svg>
+				</span>
 				<div id="notLoggedContainer">
 					<div id="loginContainer" style="display: block;">
 						<div class="welcomeMsg">
