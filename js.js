@@ -2,7 +2,7 @@ var user = JSON.parse(localStorage.getItem('Razion.user')) || null
 var Axios = axios.create({
 	// baseURL: 'https://razion-apis.onrender.com/',
 	// baseURL: 'http://192.168.100.100:3333/',
-	baseURL: 'https://vps49327.publiccloud.com.br/api/',
+	baseURL: 'https://api.razion.app.br/',
 	withCredentials: false,
 	headers: {
 		Accept: 'application/json',
